@@ -75,9 +75,9 @@ function displayArticles () {
     h3.textContent = element.name;
 
    
-    var p = document.createElement("productDescription");
+var p = document.createElement("productDescription");
     p.setAttribute("class", "productDescription");
-    p.textContent = element.description;
+    p.textContent = kanapData.description;
 
     article.appendChild (img);
     article.appendChild(h3);
@@ -98,8 +98,6 @@ fetch(Url)
     })
     .then(data => {
         console.log(data);
-        var items = document.getElementById("items");
-
         data.forEach(function(kanapData,index) {
     createCard(kanapData, index);
  
@@ -108,9 +106,7 @@ fetch(Url)
 
 function createCard(kanapData, index){
     var a = document.createElement("a")
-     a.setAttribute("href", "http://localhost:3000/api/products");
-     
-
+     a.setAttribute("href", "./product.html?id=" + kanapData._id);
      
      var article =document.createElement("article");
 
@@ -123,13 +119,13 @@ function createCard(kanapData, index){
     h3.textContent = kanapData.name;
 
 
-     var p = document.createElement("productDescription");
-    p.setAttribute("class", "productDescription");
-    p.textContent = kanapData.description;
+    var h4 = document.createElement("price" );
+    h4.setAttribute("class", ".cart__price p");
+    h4.textContent = (kanapData.price + "€");
 
     article.appendChild (img);
     article.appendChild(h3);
-    article.appendChild(p)
+    article.appendChild(h4);
 
     a.appendChild(article);
     items.appendChild(a);
