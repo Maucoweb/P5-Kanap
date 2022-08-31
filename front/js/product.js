@@ -50,23 +50,104 @@ function createProduct(kanapCard) {
     console.log(kanapCard)
     imageContainer.appendChild(img);
 
-    const kanapColors = kanapCard.colors;
+    var kanapColors = kanapCard.colors;
     console.log(kanapColors)
-
-    kanapColors.forEach(function (color) {
-        var color = document.createElement("option")
-        var optionValue = document.querySelector("select")
-        color.setAttribute("value", [color, kanapCard.colors])
-        console.log(color)
-        color.textContent = color;
-        optionValue.appendChild(color)
+    var optionValue = document.querySelector("select")
 
 
+    kanapColors.forEach(function (colorData) {
+        var option = document.createElement("option")
+        option.setAttribute("value", colorData)
+        option.textContent = colorData;
+        optionValue.appendChild(option)
+        console.log(colorData)
+
+    })
+
+
+
+    // const btnAddToBasket = document.querySelector("#addToCart");
+    // btnAddToBasket.addEventListener("click", () => {
+    //     let addToCart = document.querySelector("#colors", "#quantity")
+    //     for (let i = 0; i < addToCart.length; i++) {
+    //         const basket = addToCart[i];
+    //     }
+
+    const envoyerPanier = document.querySelector("#addToCart");
+
+    envoyerPanier.addEventListener("click", () => {
+
+
+
+
+        var optionsProduit = {
+            nomKanap: kanapCard.name,
+            id_kanap: kanapCard._id,
+            color_kanap: optionValue.value,
+            articleQt: quantity.value,
+        }
+
+        console.log(optionsProduit);
+
+        let optionProduitLocalStorage = JSON.parse(localStorage.getItem("kanap"));
+
+        if (optionProduitLocalStorage) {
+            let asSameProduct = optionsProduit.id_kanap && optionsProduit.color_kanap
+            asSameProduct = false
+            optionProduitLocalStorage.forEach(function (kanapPanier) {
+                if (kanapPanier.id_kanap === optionsProduit.id_kanap && kanapPanier.color_kanap === optionsProduit.color_kanap) {
+                    asSameProduct = true;
+                    kanapPanier.articleQt += optionsProduit.articleQt
+                    console.log(optionProduitLocalStorage)
+                }
+                localStorage.setItem("kanap", JSON.stringify(optionProduitLocalStorage))
+                console.log(optionProduitLocalStorage)
+
+            })
+
+            if (asSameProduct = false) {
+
+                optionProduitLocalStorage.push(optionsProduit);
+                localStorage.setItem("kanap", JSON.stringify(optionProduitLocalStorage));
+                console.log(optionProduitLocalStorage)
+            }
+        }
+        else {
+
+            optionProduitLocalStorage = [];
+            optionProduitLocalStorage.push(optionsProduit);
+            localStorage.setItem("kanap", JSON.stringify(optionProduitLocalStorage));
+
+        }
     })
 }
 
 
+//     addToCart.onclick = () => {
+//         const panier = {
+//             articleQt: quantity.value,
+//             colors: optionValue.value,
+//         }
+//         localStorage.setItem("articleQt", document.querySelector("#quantity").value)
+//         localStorage.setItem("colors", document.querySelector("#colors").value)
+//         localStorage.setItem("panier", JSON.stringify(panier))
 
+//     }
+
+
+// }
+
+
+
+
+
+// const local = JSON.parse(localStorage.getItem("panier"))
+
+// localStorage.setItem("clé","valeur")
+// localStorage.getItem("clé")
+// localStorage.onclick = () =>{
+// JSON.stringify(objet)
+// JSON.parse(string)
 
 
 
